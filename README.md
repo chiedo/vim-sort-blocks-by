@@ -1,4 +1,4 @@
-#Sort Blocks 
+#Sort Blocks By
 
 Now you can sort code blocks in vim such as in switch case statements and anything else that comes to mind.
 
