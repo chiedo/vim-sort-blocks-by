@@ -6,7 +6,7 @@
 " - end_line: The last line to search
 function! VimSortBlocksBy(sorter,start_line, end_line)
   " Execute the command to search for the word under the cursor
-  
+
   if exists(a:start_line)
     let start_line= "."
   else
@@ -23,10 +23,10 @@ function! VimSortBlocksBy(sorter,start_line, end_line)
   let newline_place_holder= "YOUR_FAILURE_IS_NOW_COMPLETE"
   "We will use this to find the end of the data we are sorting as we reformat
   let end_pointer= "THE_FORCE_IS_STRONG_WITH_THIS_ONE"
-  
+
   " Good practice
   execute "normal! *"
-  
+
   " Set a pointer at the end of the selection that we can reference later
   silent execute end_line . "s/".'\n'."/".'\r\r'.end_pointer."/g"
 
@@ -35,17 +35,17 @@ function! VimSortBlocksBy(sorter,start_line, end_line)
 
   " Separate our one line of text to multiple lines starting with each sorter
   silent execute start_line . "s/".a:sorter."/".'\r'. a:sorter."/g"
-  
+
   " Get the last line of the data we are manipulating based on the pointer we
   " set
   let tmp_last_line = search(end_pointer) - 1
 
   "Get rid of the last holder reference  as we will not need it
   silent execute start_line . "," . tmp_last_line ."s/".'.*\zs'.newline_place_holder."//g"
-  
+
   " Sort our selection
   silent execute start_line . "," . tmp_last_line ."sort"
-  
+
   " Remove our newline place holders and put back the newlines
   silent execute start_line . "," . tmp_last_line ."s/".newline_place_holder."/".'\r'."/g"
 
@@ -62,6 +62,10 @@ function! VimSortBlocksBy(sorter,start_line, end_line)
 
   " Get rid of the space before the first line
   silent execute start_line . "s/".'\n'."//g"
+
+  "Remove any trailing white spaces that appeared
+  silent execute start_line . "," . tmp_last_line ."s/".'\s\+$'."//g"
+
 endfunction
 
 "Available commands
