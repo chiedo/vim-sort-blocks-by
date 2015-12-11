@@ -28,40 +28,40 @@ function! VimSortBlocksBy(sorter,start_line, end_line)
   execute "normal! *"
   
   " Set a pointer at the end of the selection that we can reference later
-  execute end_line . "s/".'\n'."/".'\r\r'.end_pointer."/g"
+  silent execute end_line . "s/".'\n'."/".'\r\r'.end_pointer."/g"
 
   " Replace all newlines with our placeholder
-  execute start_line . "," . end_line ."s/".'\n'."/". newline_place_holder."/g"
+  silent execute start_line . "," . end_line ."s/".'\n'."/". newline_place_holder."/g"
 
   " Separate our one line of text to multiple lines starting with each sorter
-  execute start_line . "s/".a:sorter."/".'\r'. a:sorter."/g"
+  silent execute start_line . "s/".a:sorter."/".'\r'. a:sorter."/g"
   
   " Get the last line of the data we are manipulating based on the pointer we
   " set
   let tmp_last_line = search(end_pointer) - 1
 
   "Get rid of the last holder reference  as we will not need it
-  execute start_line . "," . tmp_last_line ."s/".'.*\zs'.newline_place_holder."//g"
+  silent execute start_line . "," . tmp_last_line ."s/".'.*\zs'.newline_place_holder."//g"
   
   " Sort our selection
-  execute start_line . "," . tmp_last_line ."sort"
+  silent execute start_line . "," . tmp_last_line ."sort"
   
   " Remove our newline place holders and put back the newlines
-  execute start_line . "," . tmp_last_line ."s/".newline_place_holder."/".'\r'."/g"
+  silent execute start_line . "," . tmp_last_line ."s/".newline_place_holder."/".'\r'."/g"
 
   " Get a couple more pointers
   let tmp_last_line = search(end_pointer)
   let tmp_last_line_2 = tmp_last_line - 1
 
   " Reformat our selection
-  execute start_line . "," . tmp_last_line ."normal! =="
+  silent execute start_line . "," . tmp_last_line ."normal! =="
 
   " Remove our end pointer
-  execute tmp_last_line . "s/".end_pointer."/".'\r'."/g"
-  execute tmp_last_line_2 . "s/".'\n'."//g"
+  silent execute tmp_last_line . "s/".end_pointer."/".'\r'."/g"
+  silent execute tmp_last_line_2 . "s/".'\n'."//g"
 
   " Get rid of the space before the first line
-  execute start_line . "s/".'\n'."//g"
+  silent execute start_line . "s/".'\n'."//g"
 endfunction
 
 "Available commands
