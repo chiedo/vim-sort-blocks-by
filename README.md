@@ -17,7 +17,7 @@ To sort a code block, simply highlight a group of code blocks, specify a string 
 Example (For sorting case blocks in a switch case statement):
 
 ```
-:SortBlocksBy case
+:'<,'>SortBlocksBy case
 ```
 
 I created this plugin mainly for sorting switch case statements on larger projects. In theory it should work for other use-cases but not tested. lol.
